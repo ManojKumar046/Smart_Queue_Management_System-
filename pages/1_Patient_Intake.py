@@ -3,6 +3,12 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 import sys, os
+from datetime import datetime
+import pytz
+
+IST = pytz.timezone('Asia/Kolkata')
+now_hour = datetime.now(IST).hour
+
 
 # ── Path setup (relative — works on any machine) ──
 BASE_DIR   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
