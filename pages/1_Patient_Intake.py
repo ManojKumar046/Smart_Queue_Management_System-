@@ -5,12 +5,16 @@ from datetime import datetime
 import sys, os
 from datetime import datetime
 from datetime import datetime
-import pytz
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
-ist = pytz.timezone('Asia/Kolkata')
-current_time = datetime.now(ist)
+# Always fresh IST time
+def get_ist_time():
+    return datetime.now(ZoneInfo("Asia/Kolkata"))
 
-st.write("Current time:", current_time.strftime("%H:%M"))
+current_time = get_ist_time()
+
+st.success(f"Current time: {current_time.strftime('%H:%M:%S')}")
 
 
 # ── Path setup (relative — works on any machine) ──
