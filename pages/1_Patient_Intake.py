@@ -3,9 +3,6 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 import sys, os
-from datetime import datetime
-from datetime import datetime
-from datetime import datetime
 from zoneinfo import ZoneInfo
 import pytz
 
@@ -13,8 +10,6 @@ ist = pytz.timezone('Asia/Kolkata')
 current_time = datetime.now(ist)
 
 st.write("Current time:", current_time.strftime("%H:%M"))
-
-
 
 # ── Path setup (relative — works on any machine) ──
 BASE_DIR   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
