@@ -4,10 +4,13 @@ import numpy as np
 from datetime import datetime
 import sys, os
 from datetime import datetime
+from datetime import datetime
 import pytz
 
-IST = pytz.timezone('Asia/Kolkata')
-now_hour = datetime.now(IST).hour
+ist = pytz.timezone('Asia/Kolkata')
+current_time = datetime.now(ist)
+
+st.write("Current time:", current_time.strftime("%H:%M"))
 
 
 # ── Path setup (relative — works on any machine) ──
