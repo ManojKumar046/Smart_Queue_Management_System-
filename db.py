@@ -4,6 +4,12 @@ db.py — MySQL Database Helper for Smart Queue Management System
 Tables:
   patients        → Patient Intake records (tokens, triage, wait times)
   queue_history   → Served patients from Live Queue
+
+Railway MySQL Config:
+  host: tramway.proxy.rlwy.net
+  port: 54779
+  database: railway
+  user: root
 """
 
 import mysql.connector
@@ -12,15 +18,17 @@ from datetime import datetime
 import streamlit as st
 
 
-# ── DB CONFIG — Change these to your MySQL credentials ──
+# ── DB CONFIG — Railway MySQL (public endpoint) ──
+# Default fallback (local dev)
 DB_CONFIG = {
     "host":     "localhost",
     "port":     3306,
-    "user":     "root",        # your MySQL username
-    "password": "M@noj777",  # your MySQL password
+    "user":     "root",
+    "password": "M@noj777",
     "database": "smartqueue_db"
 }
 
+# Override with Streamlit secrets if available (production / Streamlit Cloud)
 try:
     DB_CONFIG = {
         "host":     st.secrets["mysql"]["host"],
@@ -30,14 +38,9 @@ try:
         "database": st.secrets["mysql"]["database"]
     }
 except Exception:
-    DB_CONFIG = {
-        "host":     "localhost",
-        "port":     3306,
-        "user":     "root",
-        "password": "M@noj777",
-        "database": "smartqueue_db"
-    }
-   
+    pass  # fall back to localhost config above
+
+
 # ─────────────────────────────────────────────
 # CONNECTION
 # ─────────────────────────────────────────────
@@ -60,22 +63,18 @@ def test_connection():
 
 
 # ─────────────────────────────────────────────
-# SETUP — Create DB + Tables if not exist
+# SETUP — Create Tables if not exist
+# NOTE: Railway already provides the 'railway' database.
+#       We do NOT create a new database — just create tables.
 # ─────────────────────────────────────────────
 def setup_database():
     """
-    Creates the smartqueue_db database and required tables.
+    Creates required tables inside the existing Railway database.
     Call this once when app starts.
     """
     try:
-        # Connect without specifying DB first
-        config_no_db = {k: v for k, v in DB_CONFIG.items() if k != "database"}
-        conn = mysql.connector.connect(**config_no_db)
+        conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
-
-        # Create DB
-        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DB_CONFIG['database']}")
-        cursor.execute(f"USE {DB_CONFIG['database']}")
 
         # ── patients table ──
         cursor.execute("""
