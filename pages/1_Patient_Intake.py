@@ -15,6 +15,10 @@ def get_ist_time():
 current_time = get_ist_time()
 
 st.success(f"Current time: {current_time.strftime('%H:%M:%S')}")
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+current_time = datetime.now(ZoneInfo("Asia/Kolkata"))
 
 
 # ── Path setup (relative — works on any machine) ──
