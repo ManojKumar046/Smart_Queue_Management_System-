@@ -27,8 +27,6 @@ DB_CONFIG = {
     "password": "M@noj777",
     "database": "smartqueue_db"
 }
-
-# Override with Streamlit secrets if available (production / Streamlit Cloud)
 try:
     DB_CONFIG = {
         "host":     st.secrets["mysql"]["host"],
@@ -38,8 +36,13 @@ try:
         "database": st.secrets["mysql"]["database"]
     }
 except Exception:
-    pass  # fall back to localhost config above
-
+    DB_CONFIG = {
+        "host":     "localhost",
+        "port":     3306,
+        "user":     "root",
+        "password": "M@noj777",
+        "database": "smartqueue_db"
+    }
 
 # ─────────────────────────────────────────────
 # CONNECTION
