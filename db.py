@@ -21,28 +21,23 @@ DB_CONFIG = {
     "database": "smartqueue_db"
 }
 
-def get_db_config():
-    try:
-        return {
-            "host":     st.secrets["mysql"]["host"],
-            "port":     int(st.secrets["mysql"]["port"]),
-            "user":     st.secrets["mysql"]["user"],
-            "password": st.secrets["mysql"]["password"],
-            "database": st.secrets["mysql"]["database"]
-        }
-    except Exception as e:
-        print("Using LOCAL DB config:", e)
-
-        # Local fallback
-        return {
-            "host":     "localhost",
-            "port":     3306,
-            "user":     "root",
-            "password": "M@noj777",
-            "database": "smartqueue_db"
-        }
-
-    
+try:
+    DB_CONFIG = {
+        "host":     st.secrets["mysql"]["host"],
+        "port":     int(st.secrets["mysql"]["port"]),
+        "user":     st.secrets["mysql"]["user"],
+        "password": st.secrets["mysql"]["password"],
+        "database": st.secrets["mysql"]["database"]
+    }
+except Exception:
+    DB_CONFIG = {
+        "host":     "localhost",
+        "port":     3306,
+        "user":     "root",
+        "password": "M@noj777",
+        "database": "smartqueue_db"
+    }
+   
 # ─────────────────────────────────────────────
 # CONNECTION
 # ─────────────────────────────────────────────
