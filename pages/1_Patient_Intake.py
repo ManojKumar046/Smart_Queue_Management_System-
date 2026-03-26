@@ -7,18 +7,13 @@ from datetime import datetime
 from datetime import datetime
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import pytz
 
-# Always fresh IST time
-def get_ist_time():
-    return datetime.now(ZoneInfo("Asia/Kolkata"))
+ist = pytz.timezone('Asia/Kolkata')
+current_time = datetime.now(ist)
 
-current_time = get_ist_time()
+st.write("Current time:", current_time.strftime("%H:%M"))
 
-st.success(f"Current time: {current_time.strftime('%H:%M:%S')}")
-from datetime import datetime
-from zoneinfo import ZoneInfo
-
-current_time = datetime.now(ZoneInfo("Asia/Kolkata"))
 
 
 # ── Path setup (relative — works on any machine) ──
